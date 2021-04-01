@@ -1,0 +1,52 @@
+Configuração do servidor:
+Instale o nodejs:
+https://www.treinaweb.com.br/blog/instalando-e-gerenciando-varias-versoes-do-node-js-com-nvm/
+
+Depois verifique a versão do node com:
+$ node --version
+Deve ser pelo menos a versão v10.20.0
+
+Instale o mongo db na vps:
+Ubuntu
+sudo apt install mongodb
+
+Pra rodar o server no site basta executar:
+$ cd big-loja-server
+$ node ./server.js
+
+NOTA: esse comando deve ser executado na sua VPS.
+
+Ele vai rodar o server.js na porta 80 por padrão, se quiser mudar a porta usada,
+basta matar o processo do server.js e depois editar o PORT no arquivo big-loja-server/.env
+NOTA: acho que pode dar erro de acesso no frontend porque nele tá configurado como porta 80 no server.
+
+Se quiser mudar também a porta do frontend para acessar a api do server faça:
+abra o big-loja-frontend/src/_services/url.service.js
+Edite a variável:
+const API_URL = 'http://localhost:80/api/';
+No lugar de 80 coloque a nova porta do servidor que você alterou ali em cima.
+Depois disso, deverá reexecutar os passos de configuração do frontend.
+
+Configurando o frontend:
+Com o node já instalado:
+$ cd big-loja-frontend
+e pra compilar o projeto faça:
+$ npm install 
+Antes de dar build, é preciso configurar o path do dominio.
+Basta apenas editar o arquivo big-loja-frontend/package.json
+no atributo homepage que está assim:
+"homepage": "http://seusite.com.br/path-do-frontend",
+Troque o seusite.com.br pelo seu domínio.
+E o path-do-frontend por um caminho para acessar o app.
+Depois disso basta seguir para o build:
+$ npm run build
+Isso deve servir o front end na homepage configurada antes.
+
+Depois, pegue o conteúdo do big-loja-frontend/build e mova pro FTP do site.
+Lembre-se de coloca na subpasta criada:
+Exemplo:
+http://seusite.com.br/path-do-frontend
+path-do-frontend é a subpásta onde vai ficar o frontend final.
+
+NOTAS:
+  -o backend vai criar um database novo chamado lojaDB
